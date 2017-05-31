@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -31,21 +29,28 @@ export function fetchArticles (query) {
     dispatch(requestArticles());
     const url = `${queryURLBase}api-key=${authKey}&q=${query.qs}&begin_date=${query.startDate}0101&end_date=${query.endDate}1231`;
     fetch(url)
-      .then(res => dispatch(loadArticles(res.json())));
+      .then(data => data.json())
+      .then(res => {
+        console.log(res);
+        const articles = res.response.docs;
+        return dispatch(loadArticles(articles));
+      })
+      .catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
   }
 }
 
 
-export const actions = {
-  requestArticles,
-  loadArticles,
-  fetchArticles
-}
+// export const actions = {
+//   requestArticles,
+//   loadArticles,
+//   fetchArticles
+// }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-// const initialState = 0
 const initialState = {
   isFetching: false,
   articles: []
@@ -57,8 +62,14 @@ const searchReducer = (state = initialState, action) => {
       return Object.assign({}, state, { isFetching: true });
     }
     case LOAD_ARTICLES:
-      const articles = action.payload;
-      return Object.assign({}, state, { articles });
+      const articles = action.payload.map(article => ({
+        title: article.headline.main,
+        section: article.section_name,
+        release: article.pub_date,
+        author: article.byline ? article.byline.original : "",
+        url: article.web_url
+      }));
+      return Object.assign({}, state, { articles, isFetching: false });
     default:
       return state;
   }

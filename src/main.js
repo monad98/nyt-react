@@ -45,7 +45,7 @@ if (__DEV__) {
       './routes/index',
     ], () =>
       setImmediate(() => {
-        ReactDOM.unmountComponentAtNode(MOUNT_NODE)
+        ReactDOM.unmountComponentAtNode(document.getElementById('app'))
         render()
       })
     )
