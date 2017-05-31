@@ -1,3 +1,4 @@
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -7,6 +8,9 @@ const authKey = "d8966fd97abd46028557596c31b5fd0e";
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const FETCH_ARTICLES = 'FETCH_ARTICLES';
 export const LOAD_ARTICLES = 'LOAD_ARTICLES';
+export const CLEAR_ARTICLES = 'CLEAR_ARTICLES';
+export const REQUEST_SAVING = 'REQUEST_SAVING';
+export const SAVE_SUCCESS = 'SAVE_SUCCESS';
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -31,28 +35,61 @@ export function fetchArticles (query) {
     fetch(url)
       .then(data => data.json())
       .then(res => {
-        console.log(res);
         const articles = res.response.docs;
         return dispatch(loadArticles(articles));
       })
-      .catch(function(ex) {
-        console.log('parsing failed', ex)
+      .catch(function(e) {
+        console.log('parsing failed', e)
       })
   }
 }
 
+export function clearArticles () {
+  return {
+    type: CLEAR_ARTICLES,
+    payload: null
+  }
+}
 
-// export const actions = {
-//   requestArticles,
-//   loadArticles,
-//   fetchArticles
-// }
+export function requestSavingArticle () {
+  return {
+    type: REQUEST_SAVING,
+    payload: null
+  }
+}
+
+export function saveSuccess () {
+  return {
+    type: SAVE_SUCCESS,
+    payload: null
+  }
+}
+export function saveArticle (article) {
+  return dispatch => {
+    dispatch(requestSavingArticle());
+    const url = '/api/saved'
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(article)
+    })
+      .then(res => console.log(res))
+      .then(() => dispatch(saveSuccess()))
+      .catch(function(e) {
+        console.log('parsing failed', e)
+      })
+  }
+}
+
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
   isFetching: false,
+  isSaving: false,
   articles: []
 }
 
@@ -70,6 +107,16 @@ const searchReducer = (state = initialState, action) => {
         url: article.web_url
       }));
       return Object.assign({}, state, { articles, isFetching: false });
+
+    case CLEAR_ARTICLES:
+      return initialState;
+
+    case REQUEST_SAVING:
+      return Object.assign({}, state, { isSaving: true });
+
+    case SAVE_SUCCESS:
+      return Object.assign({}, state, { isSaving: false });
+
     default:
       return state;
   }

@@ -8,27 +8,28 @@ import './Query.scss'
 export default class Query extends Component {
   constructor(props) {
     super(props);
+    this.handleClickClearBtn = this.handleClickClearBtn.bind(this);
+    this.initState();
+  }
+
+  initState() {
     this.state = {
       qs: '',
       numberOfArticles: 10,
       startDate: '2016', //20160101
-      endDate: '2017' //20170530
+      endDate: '2017' //20171231
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value.trim()
-    });
+  handleClickClearBtn() {
+    let { clearArticles } = this.props;
+    this.initState();
+    clearArticles();
   }
 
   render() {
-    const { fetchArticles } = this.props;
+    let { fetchArticles, handleInputChange } = this.props;
+    handleInputChange = handleInputChange.bind(this);
     return (
         <div className='panel panel-primary'>
       <div className='panel-heading'>
@@ -37,13 +38,13 @@ export default class Query extends Component {
       <div className='panel-body'>
         <div className='form'>
           <form>
-            <div id='search-group' className='form-group'>
+            <div className='form-group'>
               <label id='search-label' htmlFor='search'>Search Term</label>
-              <input onChange={this.handleInputChange} type='search' name='qs' className='form-control' id='search' placeholder='google, election, war...'/>
+              <input onChange={handleInputChange} value={this.state.qs} type='search' name='qs' className='form-control' id='search' placeholder='google, election, war...'/>
             </div>
             <div className='form-group'>
               <label htmlFor='number'>Number of Articles to Retrieve</label>
-              <select onChange={this.handleInputChange} value={this.state.numberOfArticles} className='form-control' id='number' name='numberOfArticles'>
+              <select onChange={handleInputChange} value={this.state.numberOfArticles} className='form-control' id='number' name='numberOfArticles'>
                 <option>1</option>
                 <option>5</option>
                 <option>10</option>
@@ -51,16 +52,16 @@ export default class Query extends Component {
             </div>
             <div className='form-group'>
               <label htmlFor='start-year'>Start Year (Optional)</label>
-              <input onChange={this.handleInputChange} name='startDate' type='text' className='form-control' id='start-year' placeholder='2016'/>
+              <input onChange={handleInputChange} name='startDate' type='text' className='form-control' id='start-year' placeholder='2016'/>
             </div>
             <div className='form-group'>
               <label htmlFor='end-year'>End Year (Optional)</label>
-              <input onChange={this.handleInputChange} name='endDate' type='text' className='form-control' id='end-year' placeholder='2017'/>
+              <input onChange={handleInputChange} name='endDate' type='text' className='form-control' id='end-year' placeholder='2017'/>
             </div>
           </form>
           <div>
-            <button onClick={fetchArticles.bind(null, this.state)} id='search-btn' className='btn btn-primary'><i className='glyphicon glyphicon-search'></i> Search</button>
-            <button id='clear-btn' className='btn btn-default'><i className='glyphicon glyphicon-trash'></i> Clear Result</button>
+            <button onClick={fetchArticles.bind(null, this.state)} className='btn btn-primary'><i className='glyphicon glyphicon-search'></i> Search</button>
+            <button onClick={this.handleClickClearBtn} className='btn btn-default'><i className='glyphicon glyphicon-trash'></i> Clear Result</button>
           </div>
         </div>
       </div>
@@ -70,8 +71,9 @@ export default class Query extends Component {
 }
 
 Query.propTypes = {
-  // articles: PropTypes.array.isRequired,
   fetchArticles: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  clearArticles: PropTypes.func.isRequired
 };
 
 // export default Query;

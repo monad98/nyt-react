@@ -1,14 +1,12 @@
-// We only need to import the modules necessary for initial render
 import Layout from '../components/Main'
-import Home from './Home'
 import SearchRoute from './Search'
+import SavedRoute from './Saved'
 
 export default (store) => ({
   path        : '/',
   component   : Layout,
-  indexRoute  : Home,
+  indexRoute  : SearchRoute(store),
   childRoutes : [
-    // CounterRoute(store),
-    SearchRoute(store)
+    SavedRoute(store)
   ]
 });

@@ -5,6 +5,7 @@ const Article = require('../models/article');
 const getSavedArticles = function(req, res, next) {
   Article.find({})
     .limit(20)
+    .lean()
     .exec()
     .then(articles => res.json(articles))
     .catch(err => next(err));
@@ -12,15 +13,17 @@ const getSavedArticles = function(req, res, next) {
 
 const saveArticle = function (req, res, next) {
   const article = new Article(req.body);
+  console.log(req.body);
   article.save()
-    .then(() => res.status(200))
+    .then(() => res.status(200).end())
     .catch(err => next(err));
 };
 
 const deleteArticle = function (req, res, next) {
   const _id = req.params.id;
+  console.log(_id)
   Article.remove({ _id })
-    .then(() => res.status(204))
+    .then(() => res.status(204).end())
     .catch(err => next(err));
 };
 

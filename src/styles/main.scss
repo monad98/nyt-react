@@ -19,3 +19,18 @@ body {
 *:after {
   box-sizing: inherit;
 }
+
+h3 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .label {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+button.pull-right {
+  margin-top: 20px;
+}

@@ -51,11 +51,11 @@ if (project.env === 'development') {
 }
 
 
-app.use(express.static(path.resolve(project.basePath, project.outDir)));
-
 app.get('/api/saved', articleController.getSavedArticles);
 app.post('/api/saved', articleController.saveArticle);
-app.delete('/api/saved', articleController.deleteArticle);
+app.delete('/api/saved/:id', articleController.deleteArticle);
+
+app.use(express.static(path.resolve(project.basePath, project.outDir)));
 
 app.use('*', function (req, res, next) {
   const filename = path.join(compiler.outputPath, 'index.html')

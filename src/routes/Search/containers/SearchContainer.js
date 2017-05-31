@@ -2,7 +2,7 @@
  * Created by Hyungwu Pae on 5/30/17.
  */
 import { connect } from 'react-redux'
-import { fetchArticles } from '../modules/search'
+import { fetchArticles, clearArticles, saveArticle } from '../modules/search'
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
@@ -11,8 +11,11 @@ import Query from '../components/Query'
 import Results from '../components/Results'
 
 const mapDispatchToProps = {
-  fetchArticles
-}
+  fetchArticles,
+  clearArticles,
+  saveArticle
+};
+
 
 const mapStateToProps = state => ({ articles : state.search.articles });
 
@@ -29,16 +32,22 @@ class Search extends Component {
   }
 
   render() {
-    const { articles, fetchArticles } = this.props;
+    const { articles, fetchArticles, clearArticles, saveArticle } = this.props;
     return (
       <div>
-        <Query fetchArticles={fetchArticles}/>
-        {articles.length > 0 && <Results articles={articles}/>}
+        <Query fetchArticles={fetchArticles} handleInputChange={this.handleInputChange} clearArticles={clearArticles}/>
+        {articles.length > 0 && <Results articles={articles} saveArticle={saveArticle} />}
       </div>
     )
-
   }
-
 }
+
+Search.propTypes = {
+  articles: PropTypes.array.isRequired,
+  fetchArticles: PropTypes.func.isRequired,
+  clearArticles: PropTypes.func.isRequired,
+  saveArticle: PropTypes.func.isRequired
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

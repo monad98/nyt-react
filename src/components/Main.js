@@ -13,7 +13,7 @@ export const Main = ({ children }) => (
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
             <li><IndexLink to="/" activeClassName='active'>Home</IndexLink></li>
-            <li><IndexLink to="/counter" activeClassName='active'>Counter</IndexLink></li>
+            <li><IndexLink to="/saved" activeClassName='active'>Saved</IndexLink></li>
           </ul>
         </div>
       </div>

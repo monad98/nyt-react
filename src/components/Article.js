@@ -15,11 +15,11 @@ const Article = ({ idx, title, author, section, release, url }) => (
 )
 
 Article.propTypes = {
+  idx: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string,
   section: PropTypes.string.isRequired,
   release: PropTypes.string.isRequired,
-  // saveArticle: PropTypes.func.isRequired,
   url: PropTypes.string.isRequired
 }
 

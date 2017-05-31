@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 
 const articleSchema = new mongoose.Schema({
   title: {type: String, index: true},
-  date: Date,
+  section: String,
+  release: Date,
+  author: String,
   url: {
     type: String,
     default: ''

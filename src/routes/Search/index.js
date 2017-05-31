@@ -1,7 +1,7 @@
 import { injectReducer } from '../../store/reducers';
 
+//export Search container component
 export default (store) => ({
-  path : 'search',
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       const Search = require('./containers/SearchContainer').default;
