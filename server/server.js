@@ -22,13 +22,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
  * Connect to MongoDB.
  */
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://heroku_j11pv9mh:de53rkuuera9mufej6v4k5b9c3@ds157631.mlab.com:57631/heroku_j11pv9mh');
-mongoose.connection.on('error', (err) => {
-  console.error(err);
-  console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
-  process.exit();
-});
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://heroku_j11pv9mh:de53rkuuera9mufej6v4k5b9c3@ds157631.mlab.com:57631/heroku_j11pv9mh');
+// mongoose.connection.on('error', (err) => {
+//   console.error(err);
+//   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
+//   process.exit();
+// });
 
 
 /**
@@ -53,9 +53,9 @@ if (project.env === 'development') {
 
 app.use(express.static(path.resolve(project.basePath, project.outDir)));
 
-app.get('/api/saved', articleController.getSavedArticles);
-app.post('/api/saved', articleController.saveArticle);
-app.delete('/api/saved', articleController.deleteArticle);
+// app.get('/api/saved', articleController.getSavedArticles);
+// app.post('/api/saved', articleController.saveArticle);
+// app.delete('/api/saved', articleController.deleteArticle);
 
 app.use('*', function (req, res, next) {
   const filename = path.join(compiler.outputPath, 'index.html')
