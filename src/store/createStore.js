@@ -5,7 +5,7 @@ import makeRootReducer from './reducers';
 import { updateLocation } from './location';
 import { updateMsg } from './notification';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000');
+const socket = io();
 
 const createStore = () => {
   /**
