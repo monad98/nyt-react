@@ -1,15 +1,15 @@
 
-// ------------------------------------
-// Constants
-// ------------------------------------
+/**
+ * Constants
+ */
 export const REQUEST_SAVED_ARTICLES = 'REQUEST_SAVED_ARTICLES';
 export const LOAD_SAVED_ARTICLES = 'LOAD_SAVED_ARTICLES';
 export const REQUEST_DELETING_SAVED_ARTICLE = 'REQUEST_DELETING_SAVED_ARTICLE';
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 
-// ------------------------------------
-// Actions
-// ------------------------------------
+/**
+ * Actions
+ */
 export function requestSavedArticles () {
   return {
     type: REQUEST_SAVED_ARTICLES,
@@ -66,9 +66,9 @@ export function deleteSavedArticle (id) {
 }
 
 
-// ------------------------------------
-// Reducer
-// ------------------------------------
+/**
+ * Reducers
+ */
 const initialState = {
   isFetching: false,
   isDeleting: false,

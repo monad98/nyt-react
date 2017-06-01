@@ -17,7 +17,7 @@ const mapDispatchToProps = {
 };
 
 
-const mapStateToProps = state => ({ articles : state.search.articles });
+const mapStateToProps = state => ({ articles : state.search.articles, lastSearchQuery: state.search.lastSearchQuery });
 
 class Search extends Component {
 
@@ -32,11 +32,11 @@ class Search extends Component {
   }
 
   render() {
-    const { articles, fetchArticles, clearArticles, saveArticle } = this.props;
+    const { articles, fetchArticles, clearArticles, saveArticle, lastSearchQuery } = this.props;
     return (
       <div>
         <Query fetchArticles={fetchArticles} handleInputChange={this.handleInputChange} clearArticles={clearArticles}/>
-        {articles.length > 0 && <Results articles={articles} saveArticle={saveArticle} />}
+        {articles.length > 0 && <Results articles={articles} saveArticle={saveArticle} lastSearchQuery={lastSearchQuery} />}
       </div>
     )
   }
@@ -46,7 +46,8 @@ Search.propTypes = {
   articles: PropTypes.array.isRequired,
   fetchArticles: PropTypes.func.isRequired,
   clearArticles: PropTypes.func.isRequired,
-  saveArticle: PropTypes.func.isRequired
+  saveArticle: PropTypes.func.isRequired,
+  lastSearchQuery: PropTypes.string.isRequired
 };
 
 

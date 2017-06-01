@@ -1,13 +1,13 @@
 import browserHistory from 'react-router/lib/browserHistory'
 
-// ------------------------------------
-// Constants
-// ------------------------------------
+/**
+ * Constant
+ */
 export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 
-// ------------------------------------
-// Actions
-// ------------------------------------
+/**
+ * Actions
+ */
 export function locationChange (location = '/') {
   return {
     type    : LOCATION_CHANGE,
@@ -15,16 +15,16 @@ export function locationChange (location = '/') {
   }
 }
 
-// ------------------------------------
-// Specialized Action Creator
-// ------------------------------------
+/**
+ * Action creater
+ */
 export const updateLocation = ({ dispatch }) => {
   return (nextLocation) => dispatch(locationChange(nextLocation))
 }
 
-// ------------------------------------
-// Reducer
-// ------------------------------------
+/**
+ * Reducer
+ */
 const initialState = browserHistory.getCurrentLocation()
 export default function locationReducer (state = initialState, action) {
   return action.type === LOCATION_CHANGE

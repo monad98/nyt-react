@@ -1,8 +1,11 @@
-import { applyMiddleware, compose, createStore as createReduxStore } from 'redux'
-import thunk from 'redux-thunk'
-import { browserHistory } from 'react-router'
-import makeRootReducer from './reducers'
-import { updateLocation } from './location'
+import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
+import thunk from 'redux-thunk';
+import { browserHistory } from 'react-router';
+import makeRootReducer from './reducers';
+import { updateLocation } from './location';
+import { updateMsg } from './notification';
+import io from 'socket.io-client';
+const socket = io('http://localhost:3000');
 
 const createStore = () => {
   /**
@@ -34,8 +37,8 @@ const createStore = () => {
   );
   store.asyncReducers = {};
 
-  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   store.unsubscribeHistory = browserHistory.listen(updateLocation(store));
+  socket.on('saved', updateMsg(store));
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {

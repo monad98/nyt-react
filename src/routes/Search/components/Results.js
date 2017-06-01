@@ -3,10 +3,10 @@ import Article from '../../../components/Article';
 import SaveButton from '../../../components/SaveButton';
 import PropTypes from 'prop-types'
 
-const Results = ({ saveArticle, articles }) => (
+const Results = ({ saveArticle, articles, lastSearchQuery }) => (
   <div className="panel panel-primary">
     <div className="panel-heading">
-      <h3 className="panel-title"><i className="glyphicon glyphicon-th-list"></i> Top Articles </h3>
+      <h3 className="panel-title"><i className="glyphicon glyphicon-th-list"></i> Search results for '{lastSearchQuery}' </h3>
     </div>
     <div className="panel-body">
       {articles.map((article, idx) =>
@@ -35,7 +35,8 @@ Results.propTypes = {
       url: PropTypes.string.isRequired
     })
   ).isRequired,
-  saveArticle: PropTypes.func.isRequired
+  saveArticle: PropTypes.func.isRequired,
+  lastSearchQuery: PropTypes.string.isRequired
 };
 
 export default Results;

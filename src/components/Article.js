@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Article = ({ idx, title, author, section, release, url }) => (
   <div>
-    <h3>
+    <h3 className="title">
       <i className="label label-info">{idx}</i>
       <a target="_blank" href={url}>{title}</a>
     </h3>

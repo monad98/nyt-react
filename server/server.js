@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 const webpack = require('webpack')
-// const logger = require('../build/lib/logger')
 const webpackConfig = require('../build/webpack.config')
 const project = require('../project.config')
 const compress = require('compression')
@@ -12,9 +11,17 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const chalk = require('chalk');
 const articleController = require('./controllers/article');
+var server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
 app.use(compress());
 app.set('port', process.env.PORT || 3000);
+
+//middleware for use of socket.io
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -74,10 +81,27 @@ app.use('*', function (req, res, next) {
   }
 
 });
+
+
+
+/**
+ * Server start
+ */
 console.log('%s Starting server...', chalk.green('✓'))
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
   console.log('  Press CTRL-C to stop\n');
 });
 
-module.exports = app
+/**
+ * Socket.io
+ */
+io.on('connection', function(socket){
+  console.log('%s client connected', chalk.green('✓'));
+
+  socket.on('disconnect', () => {
+    console.log('%s client disconnected', chalk.red('✗'));
+  });
+});
+
+module.exports = server;

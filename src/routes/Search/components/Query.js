@@ -40,7 +40,7 @@ export default class Query extends Component {
           <form>
             <div className='form-group'>
               <label id='search-label' htmlFor='search'>Search Term</label>
-              <input onChange={handleInputChange} value={this.state.qs} type='search' name='qs' className='form-control' id='search' placeholder='google, election, war...'/>
+              <input onChange={handleInputChange} value={this.state.qs} type='search' name='qs' className='form-control' id='search' placeholder='google, election, war... more than 2 characters' />
             </div>
             <div className='form-group'>
               <label htmlFor='number'>Number of Articles to Retrieve</label>
@@ -60,7 +60,7 @@ export default class Query extends Component {
             </div>
           </form>
           <div>
-            <button onClick={fetchArticles.bind(null, this.state)} className='btn btn-primary'><i className='glyphicon glyphicon-search'></i> Search</button>
+            <button onClick={fetchArticles.bind(null, this.state)} className='btn btn-primary' disabled={this.state.qs.length < 3}><i className='glyphicon glyphicon-search'></i> Search</button>
             <button onClick={this.handleClickClearBtn} className='btn btn-default'><i className='glyphicon glyphicon-trash'></i> Clear Result</button>
           </div>
         </div>
@@ -77,8 +77,5 @@ Query.propTypes = {
 };
 
 // export default Query;
-//TODO: CURRENT QS => RESULTS title
-//TODO: Clear result button
-//TODO: Saved Page
 //TODO: Number Of articles ==> add to state (qs, number of articles)
-//TODO: handleInputChange ==> move to container
+//TODO: Search Term enter key => search;

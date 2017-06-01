@@ -1,5 +1,5 @@
 'use strict';
-
+const server = require('../server');
 const Article = require('../models/article');
 
 const getSavedArticles = function(req, res, next) {
@@ -13,9 +13,11 @@ const getSavedArticles = function(req, res, next) {
 
 const saveArticle = function (req, res, next) {
   const article = new Article(req.body);
-  console.log(req.body);
   article.save()
-    .then(() => res.status(200).end())
+    .then(saved => {
+      res.io.sockets.emit('saved', `Article saved: ${saved.title}`);
+      return res.status(200).end()
+    })
     .catch(err => next(err));
 };
 
