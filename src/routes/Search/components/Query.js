@@ -75,7 +75,3 @@ Query.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   clearArticles: PropTypes.func.isRequired
 };
-
-// export default Query;
-//TODO: Number Of articles ==> add to state (qs, number of articles)
-//TODO: Search Term enter key => search;
